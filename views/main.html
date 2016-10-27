@@ -1,0 +1,24 @@
+<html>
+<head>
+    <script src="https://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+  <script src="js/app.js"></script>
+  <script src="http://code.highcharts.com/highcharts.src.js"></script>
+  <script src="http://code.highcharts.com/highcharts-more.js"></script>
+  <!--<script src="https://www.highcharts.com/js/themes/dark-unica.js"></script>-->
+  <script src="node_modules/highcharts-ng/dist/highcharts-ng.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="styles/style.css" />
+</head>
+<body ng-controller="postController">
+<div ng-repeat ="i in chartList track by $index" ng-init="parentIndex=$index">
+  <div id="item" class="col-md-3">
+    <div class="card">
+      <div  class="wdgtHeader">
+        <a ui-sref="report" id="link" ng-click="submitForm(i.series[0].name)"  style="display: block">{{i.series[0].name}}</a>
+        <highchart id="chart" config="i"></highchart>
+      </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,163 @@
+
+<html ng-app="myApp" ng-controller="postController as cntrl" ng-init="init()">
+<html>
+<head>
+  <script src="node_modules/underscore/underscore.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+  <script src="https://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+<!--  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-aria.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js"></script>-->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="js/app.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
+  <script src="http://code.highcharts.com/highcharts.src.js"></script>
+  <script src="http://code.highcharts.com/highcharts-more.js"></script>
+  <!--<script src="https://www.highcharts.com/js/themes/dark-unica.js"></script>-->
+  <script src="node_modules/highcharts-ng/dist/highcharts-ng.js"></script>
+    <script src="node_modules/highcharts-ng/dist/highcharts-ng.js"></script>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+  <script src="node_modules/ng-infinite-scroll/build/ng-infinite-scroll.js"></script>
+
+<!--  <link rel="stylesheet" type="text/css" href="node_modules/angularjs-slider/dist/rzslider.css"/>
+  <script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>-->
+
+  <link rel="stylesheet" type="text/css" href="styles/styles.css"/>
+</head>
+<body>
+  <div class="wrapper">
+    <div id="header" class="header">
+      <h4 id="site-title"> REAL TIME DASHBOARD</h4>
+      <!--<img class="headerLogo" alt="PulsePoint" src="styles/header.PNG"/>-->
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2 sidebar" data-color="purple">
+          <div class="sidebar-wrapper bg-primary toggled">
+            <ul class="nav">
+              <li class="active">
+                <h5>Advanced Filtering</h5>
+                <div id="filtering">
+                  <img src="styles/filter.svg" width="250" height="250" style="margin: auto;">
+                </div>
+                <div>
+                  <script>
+
+                  </script>
+                </div>
+              </li>
+              <li>
+                <form class="form-inline">
+                  <div class="form-group ">
+                    <label for="totalmin">TMin</label></br>
+                    <select class="btn btn-primary dropdown-toggle" id="totalmin" ng-model="tmin_key" ng-options="item for item in totalkey" ng-change="update()"></select>
+                  </div>
+                  <div class="form-group">
+                    <label for="totalmax">TMax</label></br>
+                    <select class="btn btn-primary dropdown-toggle" id="totalmax" ng-model="tmax_key" ng-options="item for item in totalkey" ng-change="update()"></select>
+                  </div>
+                </form>
+              </li>
+              <li>
+                <form class="form-inline">
+                  <div class="form-group ">
+                    <label for="paidmin">PMin</label></br>
+                    <select class="btn btn-primary dropdown-toggle" id="paidmin" ng-model="pmin_key" ng-options="item for item in paidkey" ng-change="update()"></select>
+                  </div>
+                  <div class="form-group">
+                    <label for="paidmax">PMax</label></br>
+                    <select class="btn btn-primary dropdown-toggle" id="paidmax" ng-model="pmax_key" ng-options="item for item in paidkey" ng-change="update()" ></select>
+                  </div>
+                </form>
+              </li>
+              <li>
+                <form class="form-inline">
+                  <div class="form-group ">
+                    <label for="blockedmin">BMin</label></br>
+                    <select class="btn btn-primary dropdown-toggle" id="blockedmin" ng-model="bmin_key" ng-options="item for item in blockedkey" ng-change="update()" ></select>
+                  </div>
+                  <div class="form-group">
+                    <label for="blockedmax">BMax</label></br>
+                    <select class="btn btn-primary dropdown-toggle" id="blockedmax" ng-model="bmax_key" ng-options="item for item in blockedkey" ng-change="update()"></select>
+                  </div>
+                </form>
+              </li>
+              <!--<li class>
+                <h5>Total Impresions</h5>
+                <rzslider id=1 rz-slider-model="slider_ticks_values.value"  rz-slider-options="slider_ticks_values.options"></rzslider>
+              </li>
+              <li>
+                <h5>Paid Impresions</h5>
+                <rzslider id=2 rz-slider-model="slider_paid_values.value" rz-slider-options="slider_paid_values.options"></rzslider>
+              </li>
+              <li class>
+                <h5>Blocked Impresions</h5>
+                <rzslider id=3  rz-slider-model="slider_blocked_values.value"  rz-slider-options="slider_blocked_values.options"></rzslider>
+              </li>-->
+              <li>
+                <label for="country">Country</label></br>
+                <select class="btn btn-primary dropdown-toggle" id="country" ng-model="country_key" ng-options="item for item in country" style="width:100%" ng-change="update()"></select>
+              </li>
+              <li>
+                <label for="cluster">Cluster</label></br>
+                <select class="btn btn-primary dropdown-toggle" id="cluster" ng-model="cluster_key" ng-options="item for item in cluster" style="width:100%" ng-change="update()"></select>
+              </li>
+              <li>
+                <label for="datacenter">Datacenter</label></br>
+                <select class="btn btn-primary dropdown-toggle" id="datacenter" ng-model="datacenter_key" ng-options="item for item in datacenter" style="width:100%" ng-change="update()"></select>
+              </li>
+              <li>
+                <label for="impsource">Impsource</label></br>
+                <select class="btn btn-primary dropdown-toggle" id="impsource" ng-model="impsource_key" ng-options="item for item in impsource" style="width:100%" ng-change="update()"></select>
+              </li>
+              <li>
+                <label for="device">Device</label></br>
+                <select class="btn btn-primary dropdown-toggle" id="device" ng-model="device_key" ng-options="item for item in device" style="width:100%" ng-change="update()"></select>
+              </li>
+
+
+              <!--<li class>
+              <h5>Revenue</h5>
+              <rzslider id=4  rz-slider-model="slider_revenue_values.value" rz-slider-options="slider_revenue_values.options"></rzslider>
+            </li>
+            <li class>
+            <h5>Cost</h5>
+            <rzslider id =5 rz-slider-model="slider_cost_values.value" rz-slider-options="slider_cost_values.options"></rzslider>
+          </li>-->
+        </ul>
+
+      </div>
+    </div>
+    <div id="main-panel" class="col-md-10 main-panel" ui-view="query">
+
+       <div id="scroll" infinite-scroll='getMoreData()'   infinite-scroll-distance='1'>
+     <!--<div ng-repeat ="i in chartList track by $index" ng-init="parentIndex=$index">-->
+     <div ng-repeat ="i in data track by $index" ng-init="parentIndex=$index">
+        <div ng-if="toggle">
+        <div id="item" class="col-md-3">
+          <div class="card">
+            <div  class="wdgtHeader">
+              <a ui-sref="report" id="link" ng-click="submitForm(i.series[0].name)" style="display: block">{{i.series[0].name}}</a>
+              <highchart id="chart" config="i"></highchart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</div>
+<div style="clear:both;"></div>
+</div>
+      <div>
+        <span us-spinner spinner-key="spinner-1" spinner-start-active="loading"></span>
+      </div>
+    </div>
+    <footer class="footer">
+      <h4 id="site-title"></h4>
+      <!--<img class="footerLogo" alt="footer" src="styles/footer.PNG"/>-->
+    </footer>
+  </div>
+</body>
+</html>
